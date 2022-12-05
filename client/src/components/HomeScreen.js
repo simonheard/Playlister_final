@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
+import PlayerWrapper from './PlayerWrapper'
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
@@ -36,36 +37,32 @@ const HomeScreen = () => {
                 ))
                 
             }
-            <Fab sx={{transform:"translate(1150%, 10%)"}}
+            {/* <Fab sx={{transform:"translate(1150%, 10%)"}}
                 color="primary" 
                 aria-label="add"
                 id="add-list-button"
                 onClick={handleCreateNewList}
             >
                 <AddIcon />
-            </Fab>
+            </Fab> */
+            //************MOVE THESE TO STATUS BAR**************/
+            }
             </List>;
     }
     return (
-        <div id="playlist-selector">
-            <div id="list-selector-heading">
-            <Fab sx={{transform:"translate(-20%, 0%)"}}
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                Your Playlists
-            </div>
+        <div id="home-screen">
             <Box sx={{bgcolor:"background.paper"}} id="list-selector-list">
                 {
                     listCard
                 }
                 <MUIDeleteModal />
             </Box>
-        </div>)
+            <div id="player-wrapper">
+                <PlayerWrapper/>
+            </div>
+        </div>
+        
+        )
 }
 
 export default HomeScreen;

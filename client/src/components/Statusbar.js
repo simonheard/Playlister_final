@@ -28,7 +28,11 @@ function Statusbar() {
         </div>
     );
     }
-    return null;
+    return(
+        <div id="playlister-statusbar">
+            Your lists
+        </div>
+    );
 }
 /*<input type="button" 
 onClick={clickHandler} 

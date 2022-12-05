@@ -38,12 +38,12 @@ body {
   left: 0%;
 }
 
-#playlister-banner {
+#app-banner {
   position: absolute;
   left: 0%;
   top: 0%;
   width: 100%;
-  height: 10%;
+  height: 5%;
   float: left;
   background-image: linear-gradient(to bottom, #b8b808, #636723);
   color: white;
@@ -94,22 +94,22 @@ body {
   cursor: not-allowed;
 }
 
-#playlister-list-selector {
+/* #playlister-list-selector {
   position: absolute;
   left: 0%;
   top: 10%;
-  width: 100%;
+  width: 70%;
   height: 80%;
   background-color: var(--swatch-primary);
   max-height: 100px;
   overflow: scroll;
-}
+} */
 
 #playlister-workspace {
   position: absolute;
   left: 0%;
   top: 10%;
-  width: 100%;
+  width: 70%;
   height: 80%;
   background-color: var(--swatch-accent);
   max-height: 100px;
@@ -152,11 +152,19 @@ body {
   position: absolute;
   left: 0%;
   top: 10%;
-  width: 100%;
-  height: 90%;
+  width: 60%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+}
+
+#player-wrapper {
+  position: absolute;
+  left: 60%;
+  top: 10%;
+  width: 40%;
+  height: 80%;
 }
 
 
