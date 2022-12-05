@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import AuthContext from '../auth'
 import { GlobalStoreContext } from '../store'
+import Fab from '@mui/material/Fab'
+import AddIcon from '@mui/icons-material/Add';
 
 /*
     Our Status bar React component goes at the bottom of our UI.
@@ -8,34 +10,41 @@ import { GlobalStoreContext } from '../store'
     @author McKilla Gorilla
 */
 
-
-
 function Statusbar() {
-
-    function clickHandler() {
-        store.tryAcessingOtherAccountPlaylist();
-    }
-
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
+    function handleCreateNewList() {
+        store.createNewList();
+    }
+    let button = 
+            <Fab 
+                color="primary" 
+                aria-label="add"
+                id="add-list-button"
+                onClick={handleCreateNewList}>
+                <AddIcon />
+            </Fab>
+
     console.log("logged in: " +  auth.loggedIn);
     let text ="";
-    if (auth.loggedIn && store.currentList){
-        text = store.currentList.name;
-    return (
-        <div id="playlister-statusbar">
-            {text}
-        </div>
-    );
+    if (auth.loggedIn){
+        if(store.currentList){
+            text = store.currentList.name;
+            return (
+                <div id="playlister-statusbar">
+                    {text}
+                </div>
+            );
+        }
+        return(
+            <div id="playlister-statusbar">
+                {button}
+                Your lists
+            </div>
+        );
     }
-    return(
-        <div id="playlister-statusbar">
-            Your lists
-        </div>
-    );
+    return null;
+
 }
-/*<input type="button" 
-onClick={clickHandler} 
-value='clickyclicky' />*/
 
 export default Statusbar;

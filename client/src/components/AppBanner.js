@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
-
+import image from './logo.png'
 import EditToolbar from './EditToolbar'
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -13,6 +13,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Avatar } from '@mui/material';
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -97,36 +98,24 @@ export default function AppBanner() {
 
     return (
         <div id="app-banner">
-            <Box sx={{flexGrow: 1}}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Typography                        
-                            variant="h4"
-                            noWrap
-                            component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' } }}                        
+            <Box sx={{display: "flex", flexDirection: "column"}}>
+                <Box sx={{display: "flex", flexDirection: "row"}}>
+                <img alt="logo" style={{height:"50px"}} src={image}/>
+                    <Box sx={{ height: "1", position: "absolute", right:"15px", display: { xs: 'none', md: 'flex' } }}>
+                        <IconButton
+                            size="large"
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleProfileMenuOpen}
+                            color="inherit"
                         >
-                            <Link onClick={handleHouseClick} style={{ textDecoration: 'none', color: 'white' }} to='/'>⌂</Link>
-                        </Typography>
-                        <Box sx={{ flexGrow: 1 }}></Box>
-                        <Box sx={{ height: "90px", display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                { getAccountMenu(auth.loggedIn) }
-                            </IconButton>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                {
-                    menu
-                }
+                            { getAccountMenu(auth.loggedIn) }
+                        </IconButton>
+                    </Box>
+                </Box>
+                {menu}
             </Box>
         </div>
     );
