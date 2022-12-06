@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store';
-import AuthContext from '../auth'
+//import AuthContext from '../auth'
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -27,7 +27,7 @@ import { Typography } from '@mui/material';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
-    const { auth } = useContext(AuthContext);
+    //const { auth } = useContext(AuthContext);
     const [expanded, setExpanded] = useState(false);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
@@ -76,8 +76,8 @@ function ListCard(props) {
     
     async function handleDeleteList(event, id) {
         event.stopPropagation();
-        let _id = event.target.id;
-        _id = ("" + _id).substring("delete-list-".length);
+        //let _id = event.target.id;
+        //_id = ("" + _id).substring("delete-list-".length);
         store.markListForDeletion(id);
     }
     function handleKeyPress(event) {

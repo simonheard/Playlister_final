@@ -3,12 +3,8 @@ import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
 import PlayerWrapper from './PlayerWrapper'
-
-import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Box from '@mui/material/Box'
-import AuthContext from '../auth'
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -20,11 +16,9 @@ const HomeScreen = () => {
     useEffect(() => {
         //store.loadIdNamePairs();
         store.loadPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    function handleCreateNewList() {
-        store.createNewList();
-    }
     let listCard = "";
     if (store) {
         listCard = 

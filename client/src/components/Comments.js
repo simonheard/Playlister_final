@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import CommentCard from './CommentCard';
 import {Box, TextField} from '@mui/material/';
