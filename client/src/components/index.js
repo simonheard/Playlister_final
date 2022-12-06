@@ -1,5 +1,5 @@
 import AppBanner from './AppBanner'
-import EditToolbar from './EditToolbar'
+import EditToolbar from './SongToolbar'
 import HomeScreen from './HomeScreen'
 import HomeWrapper from './HomeWrapper'
 import ListCard from './ListCard'

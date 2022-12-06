@@ -12,7 +12,7 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
     
     @author McKilla Gorilla
 */
-function EditToolbar() {
+function SongToolbar() {
     const { store } = useContext(GlobalStoreContext);
 
     function handleAddNewSong() {
@@ -28,7 +28,7 @@ function EditToolbar() {
         store.closeCurrentList();
     }
     return (
-        <div id="edit-toolbar">
+        <div>
             <Button
                 disabled={!store.canAddNewSong()}
                 id='add-song-button'
@@ -61,4 +61,4 @@ function EditToolbar() {
     )
 }
 
-export default EditToolbar;
+export default SongToolbar;

@@ -12,6 +12,7 @@ import MUIRemoveSongModal from './MUIRemoveSongModal'
 import SongCard from './SongCard.js'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import SongToolbar from './SongToolbar';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -104,7 +105,7 @@ function ListCard(props) {
                 </Box>
                 <Box>
                     <Box sx={{height: '87%', width: '100%'}}>
-                        <List sx={{overflow: 'scroll', height: '87%', width: '100%', bgcolor: '#12afb6'}}>
+                        <List sx={{overflow: 'scroll', maxHeight: '500px', width: '100%', bgcolor: '#12afb6'}}>
                             {
                                 store.currentList.songs.map((song, index) => (
                                     <SongCard
@@ -118,13 +119,14 @@ function ListCard(props) {
                         </List>
                     </Box>
                 </Box>
-                <Box sx={{display: "flex", flexDirection: "row"}}>
-                    <span style={{fontSize:'12pt'}}>Songs Toolbar</span>
+                <Box>
+                    <SongToolbar/>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <span style={{fontSize:'12pt'}}>Published:   Listens:</span>
                 </Box>
             </Box>
+            {modalJSX}
         </ListItem>
     }
     }

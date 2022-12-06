@@ -1,23 +1,19 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
-import { GlobalStoreContext } from '../store'
+//import { GlobalStoreContext } from '../store'
 import image from './logo.png'
-import EditToolbar from './EditToolbar'
+//import EditToolbar from './EditToolbar'
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Avatar } from '@mui/material';
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
-    const { store } = useContext(GlobalStoreContext);
+    //const { store } = useContext(GlobalStoreContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 
@@ -32,10 +28,6 @@ export default function AppBanner() {
     const handleLogout = () => {
         handleMenuClose();
         auth.logoutUser();
-    }
-
-    const handleHouseClick = () => {
-        store.closeCurrentList();
     }
 
     const menuId = 'primary-search-account-menu';
@@ -78,13 +70,13 @@ export default function AppBanner() {
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>        
 
-    let editToolbar = "";
+    //let editToolbar = "";
     let menu = loggedOutMenu;
     if (auth.loggedIn) {
         menu = loggedInMenu;
-        if (store.currentList) {
-            editToolbar = <EditToolbar />;
-        }
+        // if (store.currentList) {
+        //     editToolbar = <EditToolbar />;
+        // }
     }
     
     function getAccountMenu(loggedIn) {
