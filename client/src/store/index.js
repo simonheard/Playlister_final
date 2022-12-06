@@ -268,6 +268,7 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncChangeListName(id);
+        store.loadIdNamePairs();
     }
 
     // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST

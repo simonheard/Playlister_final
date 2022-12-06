@@ -186,12 +186,12 @@ body {
 }
 
 .selected-list-card {
-  background-color: var(--swatch-accent);
+  background-color: #fffc50;
   color: white;
 }
 
 .unselected-list-card {
-  background-color: #d6c4d8;
+  background-color: #87e9a5;
 }
 
 .list-card-button {
