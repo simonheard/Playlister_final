@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store';
 import AuthContext from '../auth';
 import Comments from "./Comments";
+import Player from "./Player";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -48,10 +49,13 @@ function TabPanel(props) {
     };
 
     let comments=null;
+    let player=null;
     if(store.currentList){
         comments=<Comments/>
+        player = <Player/>
     }else{
         comments=null;
+        player=null;
     }
   
     return (
@@ -63,7 +67,7 @@ function TabPanel(props) {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          Player
+          {player}
         </TabPanel>
         <TabPanel value={value} index={1}>
           {comments}
