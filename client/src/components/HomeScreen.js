@@ -41,7 +41,7 @@ const HomeScreen = () => {
     }
     return (
         <div id="home-screen">
-            <Box sx={{bgcolor:"background.paper"}} id="list-selector-list">
+            <Box sx={{ bgcolor:"background.paper"}} id="list-selector-list">
                 {
                     listCard
                 }

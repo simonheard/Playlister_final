@@ -115,7 +115,7 @@ function ListCard(props) {
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex', p: 1 }}
+            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex'}}
             style={{transform:"translate(1%,0%)", width: '98%', fontSize: '24pt' }}
         >
             <Box sx={{display: "flex", flexDirection: "column"}}>
@@ -153,7 +153,7 @@ function ListCard(props) {
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#F8F0FE', marginTop: '15px', display: 'flex', p: 1 }}
+            sx={{borderRadius:"25px", p: "10px", bgcolor: '#F8F0FE', marginTop: '15px', display: 'flex'}}
             style={{transform:"translate(1%,0%)", width: '98%', fontSize: '24pt' }}
         >
             <Box sx={{display: "flex", flexDirection: "column", height: '100%', width: '100%'}}>
@@ -182,7 +182,7 @@ function ListCard(props) {
                 </Box>
                 <Box>
                     <Box sx={{height: '87%', width: '100%'}}>
-                        <List sx={{overflow: 'scroll', maxHeight: '500px', width: '100%', bgcolor: '#d6c4d8'}}>
+                        <List sx={{overflowY: 'scroll', maxHeight: '450px', width: '100%', bgcolor: '#d6c4d8'}}>
                             {
                                 store.currentList.songs.map((song, index) => (
                                     <SongCard

@@ -28,7 +28,7 @@ function SongToolbar() {
         store.closeCurrentList();
     }
     return (
-        <div>
+        <div id="song-toolbar">
             <Button
                 disabled={!store.canAddNewSong()}
                 id='add-song-button'

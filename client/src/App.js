@@ -11,6 +11,7 @@ import {
     Statusbar,
     WorkspaceScreen
 } from './components'
+import MainToolbar from './components/MainToolbar';
 /*
     This is our application's top-level component.
     
@@ -28,6 +29,7 @@ const App = () => {
             <AuthContextProvider>
                 <GlobalStoreContextProvider>              
                     <AppBanner />
+                    <MainToolbar />
                     <Switch>
                         <Route path="/" exact component={HomeWrapper} />
                         <Route path="/login/" exact component={LoginScreen} />
