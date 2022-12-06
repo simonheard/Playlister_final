@@ -52,7 +52,11 @@ function TabPanel(props) {
     let player=null;
     if(store.currentList){
         comments=<Comments/>
-        player = <Player/>
+        if(store.currentList.songs.length>0){
+            player = <Player/>
+        }else{
+            player = <Typography fontSize="48pt" fontWeight="bold">There are no song in this playlist.</Typography>
+        }
     }else{
         comments=null;
         player=null;
