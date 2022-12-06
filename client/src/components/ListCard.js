@@ -13,7 +13,10 @@ import MUIRemoveSongModal from './MUIRemoveSongModal'
 import SongCard from './SongCard.js'
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import SongToolbar from './SongToolbar';
+import { Typography } from '@mui/material';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -115,7 +118,17 @@ function ListCard(props) {
 
     let owner = playlist.ownerName;
     let time = playlist.createdAt.slice(0,10);
+    let listens = playlist.listens;
+    let upvotes = playlist.upvotes;
+    let downvotes = playlist.downvotes;
     console.log(playlist);
+
+    function handleDownvotes(){
+        store.downvote();
+    }
+    function handleUpvotes(){
+        store.upvote();
+    }
 
     let cardElement = 
         <ListItem
@@ -139,17 +152,27 @@ function ListCard(props) {
                             </IconButton>
                         </Box>
                     </Box>
-                    <Box sx={{ p: 1, position: "absolute", right:"15px"}}>
-                        <IconButton onClick={handleToggleExpand} aria-label='expand'>
-                            <KeyboardDoubleArrowDownIcon style={{fontSize:'24pt'}} />
-                        </IconButton>
+                    <Box sx={{display: "flex", flexDirection: "row"}}>
+                        <Box sx={{ p: 2, position: "absolute", right:"16%"}}>
+                                <ThumbDownIcon style={{fontSize:'24pt'}} />
+                        </Box>
+                        <Typography sx={{ p: 1, position: "absolute", right:"11%", fontSize:"24px", top:"15px"}}>{downvotes}</Typography>
+                        <Box sx={{ p: 1, position: "absolute", right:"1%"}}>
+                            <IconButton onClick={handleToggleExpand} aria-label='expand'>
+                                <KeyboardDoubleArrowDownIcon style={{fontSize:'24pt'}} />
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ p: 2, position: "absolute", right:"31%"}}>
+                                <ThumbUpIcon style={{fontSize:'24pt'}} />
+                        </Box>
+                        <Typography sx={{ p: 1, position: "absolute", right:"26%", fontSize:"24px", top:"15px"}}>{upvotes}</Typography>
                     </Box>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <span style={{fontSize:'12pt'}}> By: {owner} </span>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
-                    <span style={{fontSize:'12pt'}}>Published: {time}   Listens:</span>
+                    <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
                 </Box>
             </Box>
         </ListItem>
@@ -177,14 +200,28 @@ function ListCard(props) {
                             </IconButton>
                         </Box>
                     </Box>
-                    <Box sx={{ p: 1, position: "absolute", right:"15px"}}>
-                        <IconButton onClick={handleToggleShrink} aria-label='shrink'>
-                            <KeyboardDoubleArrowUpIcon style={{fontSize:'24pt'}} />
-                        </IconButton>
+                    <Box sx={{display: "flex", flexDirection: "row"}}>
+                    <Box sx={{ p: 1, position: "absolute", right:"16%"}}>
+                            <IconButton onClick={handleDownvotes} aria-label='downvotes'>
+                                <ThumbDownIcon style={{fontSize:'24pt'}} />
+                            </IconButton>
+                        </Box>
+                        <Typography sx={{ p: 1, position: "absolute", right:"11%", fontSize:"24px", top:"15px"}}>{downvotes}</Typography>
+                        <Box sx={{ p: 1, position: "absolute", right:"1%"}}>
+                            <IconButton onClick={handleToggleShrink} aria-label='shrink'>
+                                <KeyboardDoubleArrowUpIcon style={{fontSize:'24pt'}} />
+                            </IconButton>
+                        </Box>
+                        <Box sx={{ p: 1, position: "absolute", right:"31%"}}>
+                            <IconButton onClick={handleUpvotes} aria-label='upvotes'>
+                                <ThumbUpIcon style={{fontSize:'24pt'}} />
+                            </IconButton>
+                        </Box>
+                        <Typography sx={{ p: 1, position: "absolute", right:"26%", fontSize:"24px", top:"15px"}}>{upvotes}</Typography>
                     </Box>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
-                    <span style={{fontSize:'12pt'}}> By {owner}</span>
+                    <span style={{fontSize:'12pt'}}> By: {owner}</span>
                 </Box>
                 <Box>
                     <Box sx={{height: '87%', width: '100%'}}>
@@ -206,7 +243,7 @@ function ListCard(props) {
                     <SongToolbar/>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
-                    <span style={{fontSize:'12pt'}}>Published: {time}   Listens:</span>
+                    <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
                 </Box>
             </Box>
             {modalJSX}

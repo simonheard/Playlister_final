@@ -14,6 +14,7 @@ const playlistSchema = new Schema(
         published: {type: Boolean, default: false},
         upvotes: { type: Number, default: 0},
         downvotes: {type: Number, default: 0},
+        listens: {type: Number, default: 0},
         publishedDate: {type: Date, required: false},
         songs: { type: [{
             title: String,

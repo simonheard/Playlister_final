@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { Tabs, Tab, Box, Typography} from '@mui/material';
 import PropTypes from 'prop-types';
+import { useContext, useState } from 'react';
+import { GlobalStoreContext } from '../store';
+import AuthContext from '../auth';
+import Comments from "./Comments";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -36,10 +40,19 @@ function TabPanel(props) {
   
   export default function PlayerWrapper() {
     const [value, setValue] = React.useState(0);
+    const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
   
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
+
+    let comments=null;
+    if(store.currentList){
+        comments=<Comments/>
+    }else{
+        comments=null;
+    }
   
     return (
       <Box sx={{ width: '100%' }}>
@@ -53,7 +66,7 @@ function TabPanel(props) {
           Player
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Comments
+          {comments}
         </TabPanel>
       </Box>
     );

@@ -306,6 +306,7 @@ function GlobalStoreContextProvider(props) {
         });
         tps.clearAllTransactions();
         history.push("/");
+        //store.loadPlaylists();
     }
 
     // THIS FUNCTION CREATES A NEW LIST
@@ -461,6 +462,42 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncSetCurrentList(id);
+    }
+
+    store.listen = function() {
+        if(store.currentList){
+            let list = store.currentList;
+            list.listens= list.listens+1;
+            
+            console.log("listen", list.listens)
+            store.updateCurrentList();
+        }
+    }
+    store.downvote = function(){
+        if(store.currentList){
+            let list = store.currentList;
+            list.downvotes= list.downvotes+1;
+            console.log(list.downvotes);
+            store.updateCurrentList();
+        }
+    }
+    store.upvote = function(){
+        if(store.currentList){
+            let list = store.currentList;
+            list.upvotes= list.upvotes+1;
+            console.log(list.upvotes);
+            store.updateCurrentList();
+        }
+    }
+    store.addNewComment = function(content) {
+        let list = store.currentList;
+        let newComment = {
+            auther: list.ownerName,
+            content: content
+        };
+        list.comments.splice(list.comments.length,0,newComment);
+        console.log("CUrrentlist:",list);
+        store.updateCurrentList();
     }
 
     store.getPlaylistSize = function() {
