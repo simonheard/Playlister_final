@@ -1,6 +1,7 @@
 const auth = require('../auth')
 const User = require('../models/user-model')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+//const { getUserNameByEmail } = require('../../client/src/auth/auth-request-api');
 
 getLoggedIn = async (req, res) => {
     try {
@@ -28,6 +29,19 @@ getLoggedIn = async (req, res) => {
         console.log("err: " + err);
         res.json(false);
     }
+}
+
+getUserNameByEmail = async (req, res) => {
+    await User.findOne({ email: req.params.email}, (err, name)=>{
+        if (err){
+            return res.status(400).json({success: false, error: err});
+        }
+        let firstName = JSON.stringify(name.firstName);
+        let lastName = JSON.stringify(name.lastName);
+        let fullName = firstName.slice(1,firstName.length-1)+" "+lastName.slice(1,lastName.length-1);
+        console.log("Found name: "+fullName);
+        return res.status(200).json({success: true, name: fullName});
+    }).catch(err=>console.log(err))
 }
 
 loginUser = async (req, res) => {
@@ -170,5 +184,6 @@ module.exports = {
     getLoggedIn,
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    getUserNameByEmail
 }

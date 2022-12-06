@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Box from '@mui/material/Box'
+import AuthContext from '../auth'
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -17,7 +18,8 @@ const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
 
     useEffect(() => {
-        store.loadIdNamePairs();
+        //store.loadIdNamePairs();
+        store.loadPlaylists();
     }, []);
 
     function handleCreateNewList() {
@@ -28,12 +30,18 @@ const HomeScreen = () => {
         listCard = 
             <List sx={{width: '100%', bgcolor: 'background.paper', mb:"20px" }}>
             {
-                store.idNamePairs.map((pair) => (
+                // store.idNamePairs.map((pair) => (
+                //     <ListCard
+                //         key={pair._id}
+                //         idNamePair={pair}
+                //         selected={false}
+                //     />
+                // ))
+                store.playlists.map((list) => (
                     <ListCard
-                        key={pair._id}
-                        idNamePair={pair}
-                        selected={false}
-                    />
+                        key={list._id}
+                        playlist={list}
+                        />
                 ))
                 
             }

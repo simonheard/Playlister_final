@@ -17,7 +17,8 @@ function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
         loggedIn: false,
-        errorMessage: null
+        errorMessage: null,
+        name: ""
     });
     const history = useHistory();
 
@@ -72,6 +73,16 @@ function AuthContextProvider(props) {
                 }
             });
         }
+    }
+    
+    auth.getUserNameByEmail = async function(email) {
+        let name = "";
+        const response = await api.getUserNameByEmail(email);
+        if (response.status === 200) {
+            name = response.data.name;
+            console.log("name in auth: ", name)
+        }
+        auth.name = name;
     }
 
     auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {

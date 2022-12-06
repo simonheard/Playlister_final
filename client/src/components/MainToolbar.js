@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { GlobalStoreContext } from '../store'
+import AuthContext from '../auth';
 import { IconButton, Box, TextField, Typography } from '@mui/material';
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -21,9 +22,13 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
 */
 function MainToolbar() {
     const { store } = useContext(GlobalStoreContext);
+    const {auth} = useContext(AuthContext);
 
     function handleHome() {
-        console.log("HOME")
+        let name = "";
+        auth.getUserNameByEmail('a@a.a');
+        name = auth.name;
+        console.log(name);
     }
     function handlePublic() {
         console.log("Public")
@@ -34,6 +39,11 @@ function MainToolbar() {
     function handleSort() {
         console.log("Sort")
     }
+
+    if(!auth.loggedIn){
+        return (null);
+    }
+
     return (
         <Box id='main-toolbar' sx={{display: "flex", flexDirection: "row"}}>
             <Box sx={{  }}><IconButton onClick={handleHome} aria-label='home'>
