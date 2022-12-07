@@ -524,7 +524,7 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncListen();
-        store.closeCurrentList();
+        //store.closeCurrentList();
         // if(store.currentList){
         //     let list = store.currentList;
         //     list.listens= list.listens+1;

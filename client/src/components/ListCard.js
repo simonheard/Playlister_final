@@ -54,14 +54,14 @@ function ListCard(props) {
     function toggleExpand(){
         store.expandCurrentList(playlist._id);
         setExpanded(true);
-        store.listen(playlist._id, playlist);
-        setListens(listens+1);
     }
     function handleToggleShrink(event) {
         event.stopPropagation();
         toggleShrink();
     }
     function toggleShrink(){
+        store.listen(playlist._id, playlist);
+        setListens(listens+1);
         store.closeCurrentList();
         setExpanded(false);
     }
