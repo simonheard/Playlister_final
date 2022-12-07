@@ -25,7 +25,6 @@ function Statusbar() {
                 <AddIcon />
             </Fab>
 
-    console.log("logged in: " +  auth.loggedIn);
     let text ="";
     if (auth.loggedIn){
         if(store.currentList){

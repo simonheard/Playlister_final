@@ -49,9 +49,7 @@ function ListCard(props) {
         toggleExpand();
     }
     function toggleExpand(){
-        console.log("expand playlist id: ", playlist._id);
         store.expandCurrentList(playlist._id);
-        console.log("EXPAND");
         setExpanded(true);
     }
     function handleToggleShrink(event) {
@@ -60,7 +58,6 @@ function ListCard(props) {
     }
     function toggleShrink(){
         store.closeCurrentList();
-        console.log("SHRINK");
         setExpanded(false);
     }
 
@@ -119,7 +116,6 @@ function ListCard(props) {
     let listens = playlist.listens;
     let upvotes = playlist.upvotes;
     let downvotes = playlist.downvotes;
-    console.log(playlist);
 
     function handleDownvotes(){
         store.downvote();
@@ -249,7 +245,6 @@ function ListCard(props) {
         </ListItem>
     }
     }
-    //console.log(auth.user.email, playlist.userEmail);
     if(store.viewPrivate && auth.user.email!==playlist.ownerEmail){
         cardElement = null;
     }

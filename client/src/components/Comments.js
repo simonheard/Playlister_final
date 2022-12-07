@@ -10,13 +10,11 @@ function Comments(props) {
     // function handleClick(event) {
     //     // DOUBLE CLICK IS FOR SONG EDITING
     //     if (event.detail === 2) {
-    //         console.log("double clicked");
     //         store.showEditSongModal(index, song);
     //     }
     // }
     function handleChange(event){
         setText(event.target.value);
-        console.log(text);
     }
     function handleNewComment(event) {
         if (event.code === "Enter") {

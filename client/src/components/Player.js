@@ -64,7 +64,6 @@ export default function Player() {
         }
     }
     function onPlayerStateChange(event) {
-        console.log(event)
         let playerStatus = event.data;
         let player = event.target;
         if (playerStatus === -1) {

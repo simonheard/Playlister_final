@@ -518,7 +518,7 @@ function GlobalStoreContextProvider(props) {
             list.listens= list.listens+1;
             
             console.log("listen", list.listens)
-            store.updateCurrentList();
+            store.updateCurrentListNotOwner();
         }
     }
     store.downvote = function(){
@@ -526,7 +526,7 @@ function GlobalStoreContextProvider(props) {
             let list = store.currentList;
             list.downvotes= list.downvotes+1;
             console.log(list.downvotes);
-            store.updateCurrentList();
+            store.updateCurrentListNotOwner();
         }
     }
     store.upvote = function(){
@@ -534,18 +534,19 @@ function GlobalStoreContextProvider(props) {
             let list = store.currentList;
             list.upvotes= list.upvotes+1;
             console.log(list.upvotes);
-            store.updateCurrentList();
+            store.updateCurrentListNotOwner();
         }
     }
     store.addNewComment = function(content) {
         let list = store.currentList;
+        let auther = auth.user.firstName + " " + auth.user.lastName;
         let newComment = {
-            auther: list.ownerName,
+            auther: auther,
             content: content
         };
         list.comments.splice(list.comments.length,0,newComment);
-        console.log("CUrrentlist:",list);
-        store.updateCurrentList();
+        console.log("addNewComment: Currentlist:",list);
+        store.updateCurrentListNotOwner();
     }
 
     store.getPlaylistSize = function() {
@@ -655,6 +656,18 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncUpdateCurrentList();
+    }
+    store.updateCurrentListNotOwner = function() {
+        async function asyncUpdateCurrentListNotOwner() {
+            const response = await api.updatePlaylistByIdNotOwner(store.currentList._id, store.currentList);
+            if (response.data.success) {
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST,
+                    payload: store.currentList
+                });
+            }
+        }
+        asyncUpdateCurrentListNotOwner();
     }
     store.undo = function () {
         tps.undoTransaction();

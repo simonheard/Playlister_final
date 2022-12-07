@@ -32,7 +32,6 @@ function MainToolbar() {
         }
     }
     function handleSort() {
-        console.log("Sort")
     }
 
     if(!auth.loggedIn){
