@@ -521,10 +521,14 @@ function GlobalStoreContextProvider(props) {
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
                     payload: list
                 });
+                storeReducer({
+                    type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
+                    payload: {}
+                });
             }
         }
         asyncListen();
-        //store.closeCurrentList();
+        store.closeCurrentList();
         // if(store.currentList){
         //     let list = store.currentList;
         //     list.listens= list.listens+1;
