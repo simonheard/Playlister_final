@@ -25,10 +25,14 @@ function MainToolbar() {
         console.log(name);
     }
     function handlePublic() {
-        console.log("Public")
+        if(store.viewPrivate){
+            store.toggleViewPrivate();
+        }
     }
     function handlePrivate() {
-        console.log("Private")
+        if(!store.viewPrivate){
+            store.toggleViewPrivate();
+        }
     }
     function handleSort() {
         console.log("Sort")

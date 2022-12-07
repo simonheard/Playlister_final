@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store';
-//import AuthContext from '../auth'
+import AuthContext from '../auth'
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -27,7 +27,7 @@ import { Typography } from '@mui/material';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
-    //const { auth } = useContext(AuthContext);
+    const { auth } = useContext(AuthContext);
     const [expanded, setExpanded] = useState(false);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
@@ -37,7 +37,6 @@ function ListCard(props) {
         event.stopPropagation();
         toggleEdit();
     }
-
     function toggleEdit() {
         let newActive = !editActive;
         if (newActive) {
@@ -45,7 +44,6 @@ function ListCard(props) {
         }
         setEditActive(newActive);
     }
-
     function handleToggleExpand(event) {
         event.stopPropagation();
         toggleExpand();
@@ -55,7 +53,6 @@ function ListCard(props) {
         console.log("EXPAND");
         setExpanded(true);
     }
-
     function handleToggleShrink(event) {
         event.stopPropagation();
         toggleShrink();
@@ -130,6 +127,25 @@ function ListCard(props) {
         store.upvote();
     }
 
+    let editAndDelete = 
+        <Box sx={{display: "flex", flexDirection: "row"}}>
+            <Box sx={{ p: 1 }}><IconButton onClick={handleToggleEdit} aria-label='edit'>
+                <EditIcon style={{fontSize:'24pt'}} />
+            </IconButton></Box>
+            <Box sx={{ p: 1 }}>
+                <IconButton onClick={(event) => {
+                        handleDeleteList(event, playlist._id)
+                    }} aria-label='delete'>
+                    <DeleteIcon style={{fontSize:'24pt'}} />
+                </IconButton>
+            </Box>
+        </Box>
+    let songToolbar = <SongToolbar/>
+    if (auth.user.email!==playlist.ownerEmail){
+        editAndDelete = null;
+        songToolbar = null;
+    }
+
     let cardElement = 
         <ListItem
             id={playlist._id}
@@ -141,16 +157,7 @@ function ListCard(props) {
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <Box sx={{display: "flex", flexDirection: "row"}}>
                         <Box sx={{ p: 1, flexGrow: 1}}><span style={{fontSize:'24pt'}}>{cardLable}</span></Box>
-                        <Box sx={{ p: 1 }}><IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon style={{fontSize:'24pt'}} />
-                        </IconButton></Box>
-                        <Box sx={{ p: 1 }}>
-                            <IconButton onClick={(event) => {
-                                    handleDeleteList(event, playlist._id)
-                                }} aria-label='delete'>
-                                <DeleteIcon style={{fontSize:'24pt'}} />
-                            </IconButton>
-                        </Box>
+                        {editAndDelete}
                     </Box>
                     <Box sx={{display: "flex", flexDirection: "row"}}>
                         <Box sx={{ p: 2, position: "absolute", right:"16%"}}>
@@ -189,16 +196,7 @@ function ListCard(props) {
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <Box sx={{display: "flex", flexDirection: "row"}}>
                         <Box sx={{ p: 1, flexGrow: 1}}><span style={{fontSize:'24pt'}}>{cardLable}</span></Box>
-                        <Box sx={{ p: 1 }}><IconButton onClick={handleToggleEdit} aria-label='edit'>
-                        <EditIcon style={{fontSize:'24pt'}} />
-                        </IconButton></Box>
-                        <Box sx={{ p: 1 }}>
-                            <IconButton onClick={(event) => {
-                                    handleDeleteList(event, playlist._id)
-                                }} aria-label='delete'>
-                                <DeleteIcon style={{fontSize:'24pt'}} />
-                            </IconButton>
-                        </Box>
+                        {editAndDelete}
                     </Box>
                     <Box sx={{display: "flex", flexDirection: "row"}}>
                     <Box sx={{ p: 1, position: "absolute", right:"16%"}}>
@@ -240,7 +238,7 @@ function ListCard(props) {
                     </Box>
                 </Box>
                 <Box>
-                    <SongToolbar/>
+                    {songToolbar}
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
@@ -249,6 +247,10 @@ function ListCard(props) {
             {modalJSX}
         </ListItem>
     }
+    }
+    //console.log(auth.user.email, playlist.userEmail);
+    if(store.viewPrivate && auth.user.email!==playlist.ownerEmail){
+        cardElement = null;
     }
     return (
         cardElement
