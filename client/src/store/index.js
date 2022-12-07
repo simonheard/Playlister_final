@@ -358,8 +358,7 @@ function GlobalStoreContextProvider(props) {
             storeReducer({
                 type: GlobalStoreActionType.CREATE_NEW_LIST,
                 payload: newList
-            }
-            );
+            });
             //store.loadIdNamePairs();
             store.loadPlaylists();
             // IF IT'S A VALID LIST THEN LET'S START EDITING IT
@@ -368,6 +367,26 @@ function GlobalStoreContextProvider(props) {
         else {
             console.log("API FAILED TO CREATE A NEW LIST");
         }
+    }
+    store.duplicate = function(list) {
+        async function asyncDuplicate(list){
+            let newListName = list.name+" duplicate";
+            let userName = auth.user.firstName +" "+ auth.user.lastName;
+            const response = await api.createPlaylist(newListName, list.songs, auth.user.email, userName);
+            if(response.status === 201){
+                tps.clearAllTransactions();
+                let newList = response.data.playlist;
+                console.log("creatNewList in store: ",newList);
+                storeReducer({
+                    type: GlobalStoreActionType.CREATE_NEW_LIST,
+                    payload: newList
+                });
+                store.loadPlaylists();
+            }else{
+                console.log("API FAILED TO CREATE A NEW LIST");
+            }
+        }
+        asyncDuplicate(list);
     }
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS

@@ -1,22 +1,17 @@
 import { useContext, useState } from 'react';
 import { GlobalStoreContext } from '../store';
 import AuthContext from '../auth'
-import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import ListItem from '@mui/material/ListItem';
-import TextField from '@mui/material/TextField';
-import List from '@mui/material/List';
 import MUIEditSongModal from './MUIEditSongModal'
 import MUIRemoveSongModal from './MUIRemoveSongModal'
 import SongCard from './SongCard.js'
+import SongToolbar from './SongToolbar';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import SongToolbar from './SongToolbar';
-import { Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { Typography, Button, IconButton, ListItem, TextField, Box, List } from '@mui/material';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -132,6 +127,10 @@ function ListCard(props) {
         setUpvotes(upvotes+1);
     }
 
+    function handleDuplicate(){
+        store.duplicate(playlist);
+    }
+
     let editAndDelete = 
         <Box sx={{display: "flex", flexDirection: "row"}}>
             <Box sx={{ p: 1 }}><IconButton onClick={handleToggleEdit} aria-label='edit'>
@@ -242,8 +241,9 @@ function ListCard(props) {
                         </List>
                     </Box>
                 </Box>
-                <Box>
+                <Box sx={{display: "flex", flexDirection: "row"}}>
                     {songToolbar}
+                    <Button variant="contained" onClick={handleDuplicate} sx={{margin:"auto"}}>Duplicate</Button>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
