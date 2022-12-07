@@ -149,6 +149,10 @@ function ListCard(props) {
         editAndDelete = null;
         songToolbar = null;
     }
+    let duplicate = <Button variant="contained" onClick={handleDuplicate} sx={{margin:"auto"}}>Duplicate</Button>
+    if(auth.user.email==="guest"){
+        duplicate = null;
+    }
 
     let cardElement = 
         <ListItem
@@ -243,7 +247,7 @@ function ListCard(props) {
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     {songToolbar}
-                    <Button variant="contained" onClick={handleDuplicate} sx={{margin:"auto"}}>Duplicate</Button>
+                    {duplicate}
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
