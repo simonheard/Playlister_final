@@ -1,9 +1,11 @@
-import React, { useContext, useState } from 'react'
-import { GlobalStoreContext } from '../store'
+import React, { useContext, useState } from 'react';
+import { GlobalStoreContext } from '../store';
+import AuthContext from '../auth';
 import Button from '@mui/material/Button';
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [ draggedTo, setDraggedTo ] = useState(0);
     const { song, index } = props;
 
@@ -46,7 +48,8 @@ function SongCard(props) {
     }
 
     let cardClass = "list-card unselected-list-card";
-    return (
+
+    let songCard = 
         <div
             key={index}
             id={'song-' + index + '-card'}
@@ -73,6 +76,26 @@ function SongCard(props) {
                 className="list-card-button"
                 onClick={handleRemoveSong}>{"\u2715"}</Button>
         </div>
+
+    if (auth.user.email!==store.currentList.ownerEmail){
+        songCard = 
+        <div
+            key={index}
+            id={'song-' + index + '-card'}
+            className={cardClass}
+        >
+            {index + 1}.
+            <a
+                id={'song-' + index + '-link'}
+                className="song-link"
+                href={"https://www.youtube.com/watch?v=" + song.youTubeId}>
+                {song.title} by {song.artist}
+            </a>
+        </div>
+    }
+
+    return (
+        songCard
     );
 }
 

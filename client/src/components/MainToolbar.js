@@ -19,10 +19,7 @@ function MainToolbar() {
     const {auth} = useContext(AuthContext);
 
     function handleHome() {
-        let name = "";
-        auth.getUserNameByEmail('a@a.a');
-        name = auth.name;
-        console.log(name);
+        handlePublic();
     }
     function handlePublic() {
         if(store.viewPrivate){

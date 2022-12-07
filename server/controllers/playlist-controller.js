@@ -89,35 +89,35 @@ deletePlaylist = async (req, res) => {
     })
 }
 getPlaylistById = async (req, res) => {
-    if(auth.verifyUser(req) === null){
-        return res.status(400).json({
-            errorMessage: 'UNAUTHORIZED'
-        })
-    }
+    // if(auth.verifyUser(req) === null){
+    //     return res.status(400).json({
+    //         errorMessage: 'UNAUTHORIZED'
+    //     })
+    // }
     console.log("Find Playlist with id: " + JSON.stringify(req.params.id));
-
     await Playlist.findById({ _id: req.params.id }, (err, list) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
         }
         console.log("Found list: " + JSON.stringify(list));
+        return res.status(200).json({ success: true, playlist: list })
 
-        // DOES THIS LIST BELONG TO THIS USER?
-        async function asyncFindUser(list) {
-            await User.findOne({ email: list.ownerEmail }, (err, user) => {
-                console.log("user._id: " + user._id);
-                console.log("req.userId: " + req.userId);
-                if (user._id == req.userId) {
-                    console.log("correct user!");
-                    return res.status(200).json({ success: true, playlist: list })
-                }
-                else {
-                    console.log("incorrect user!");
-                    return res.status(400).json({ success: false, description: "authentication error" });
-                }
-            });
-        }
-        asyncFindUser(list);
+        // // DOES THIS LIST BELONG TO THIS USER?
+        // async function asyncFindUser(list) {
+        //     await User.findOne({ email: list.ownerEmail }, (err, user) => {
+        //         console.log("user._id: " + user._id);
+        //         console.log("req.userId: " + req.userId);
+        //         if (user._id == req.userId) {
+        //             console.log("correct user!");
+        //             return res.status(200).json({ success: true, playlist: list })
+        //         }
+        //         else {
+        //             console.log("incorrect user!");
+        //             return res.status(400).json({ success: false, description: "authentication error" });
+        //         }
+        //     });
+        // }
+        // asyncFindUser(list);
     }).catch(err => console.log(err))
 }
 getPlaylistPairs = async (req, res) => {

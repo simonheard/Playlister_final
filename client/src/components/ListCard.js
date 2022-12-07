@@ -49,7 +49,8 @@ function ListCard(props) {
         toggleExpand();
     }
     function toggleExpand(){
-        store.setCurrentList(playlist._id);
+        console.log("expand playlist id: ", playlist._id);
+        store.expandCurrentList(playlist._id);
         console.log("EXPAND");
         setExpanded(true);
     }
