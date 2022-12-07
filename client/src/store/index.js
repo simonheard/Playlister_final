@@ -512,14 +512,25 @@ function GlobalStoreContextProvider(props) {
         asyncSetCurrentList(id);
     }
 
-    store.listen = function() {
-        if(store.currentList){
-            let list = store.currentList;
-            list.listens= list.listens+1;
-            
-            console.log("listen", list.listens)
-            store.updateCurrentListNotOwner();
+    store.listen = function(listId, list) {
+        list.listens++;
+        async function asyncListen() {
+            const response = await api.updatePlaylistByIdNotOwner(listId, list);
+            if (response.data.success) {
+                storeReducer({
+                    type: GlobalStoreActionType.SET_CURRENT_LIST,
+                    payload: list
+                });
+            }
         }
+        asyncListen();
+        store.closeCurrentList();
+        // if(store.currentList){
+        //     let list = store.currentList;
+        //     list.listens= list.listens+1;
+        //     console.log("store currentlist.listens: ", list.listens);
+        //     store.updateCurrentListNotOwner();
+        // }
     }
     store.downvote = function(){
         if(store.currentList){

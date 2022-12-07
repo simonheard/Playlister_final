@@ -28,11 +28,14 @@ import { Typography } from '@mui/material';
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
+    const { playlist } = props;
     const [expanded, setExpanded] = useState(false);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
+    const [upvotes, setUpvotes] = useState(playlist.upvotes);
+    const [downvotes, setDownvotes] = useState(playlist.downvotes);
+    const [listens, setListens] = useState(playlist.listens);
     //const { idNamePair } = props;
-    const { playlist } = props;
     function handleToggleEdit(event) {
         event.stopPropagation();
         toggleEdit();
@@ -51,6 +54,8 @@ function ListCard(props) {
     function toggleExpand(){
         store.expandCurrentList(playlist._id);
         setExpanded(true);
+        store.listen(playlist._id, playlist);
+        setListens(listens+1);
     }
     function handleToggleShrink(event) {
         event.stopPropagation();
@@ -113,15 +118,18 @@ function ListCard(props) {
 
     let owner = playlist.ownerName;
     let time = playlist.createdAt.slice(0,10);
-    let listens = playlist.listens;
-    let upvotes = playlist.upvotes;
-    let downvotes = playlist.downvotes;
+    //let listens = playlist.listens;
+    // let upvotes = playlist.upvotes;
+    // let downvotes = playlist.downvotes;
+    console.log(playlist);
 
     function handleDownvotes(){
         store.downvote();
+        setDownvotes(downvotes+1);
     }
     function handleUpvotes(){
         store.upvote();
+        setUpvotes(upvotes+1);
     }
 
     let editAndDelete = 
