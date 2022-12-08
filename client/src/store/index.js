@@ -270,6 +270,47 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+    store.sortListByListens = function(){
+        let playlists = store.playlists;
+        playlists.sort( (a,b)=> (a.listens>b.listens) ? -1 : ((b.listens>a.listens) ? 1 : 0));
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_PLAYLISTS,
+            payload: playlists
+        });
+    }
+    store.sortListByLikes = function(){
+        let playlists = store.playlists;
+        playlists.sort( (a,b)=> (a.upvotes>b.upvotes) ? -1 : ((b.upvotes>a.upvotes) ? 1 : 0));
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_PLAYLISTS,
+            payload: playlists
+        });
+    }
+    store.sortListByDislikes = function(){
+        let playlists = store.playlists;
+        playlists.sort( (a,b)=> (a.downvotes>b.downvotes) ? -1 : ((b.downvotes>a.downvotes) ? 1 : 0));
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_PLAYLISTS,
+            payload: playlists
+        });
+    }
+    store.sortListByDate = function(){
+        let playlists = store.playlists;
+        playlists.sort( (a,b)=> (a.createdAt>b.createdAt) ? -1 : ((b.createdAt>a.createdAt) ? 1 : 0));
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_PLAYLISTS,
+            payload: playlists
+        });
+    }
+    store.sortListByName = function(){
+        let playlists = store.playlists;
+        playlists.sort( (a,b)=> (a.name>b.name) ? 1 : ((b.name>a.name) ? -1 : 0));
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_PLAYLISTS,
+            payload: playlists
+        });
+    }
+
     store.toggleViewPrivate = function() {
         storeReducer({
             type: GlobalStoreActionType.TOGGLE_VIEW_PRIVATE,

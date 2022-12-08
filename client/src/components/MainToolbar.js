@@ -1,7 +1,7 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth';
-import { IconButton, Box, TextField, Typography } from '@mui/material';
+import { IconButton, Box, TextField, Typography, Menu, MenuItem } from '@mui/material';
 
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -17,6 +17,59 @@ import SortIcon from '@mui/icons-material/Sort';
 function MainToolbar() {
     const { store } = useContext(GlobalStoreContext);
     const {auth} = useContext(AuthContext);
+    const [anchorE1, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorE1);
+    
+    const handleSortMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    }
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    }
+    function handleSortByName(){
+        store.sortListByName();
+        handleMenuClose();
+    }
+    function handleSortByDate(){
+        store.sortListByDate();
+        handleMenuClose();
+    }
+    function handleSortByListen(){
+        store.sortListByListens();
+        handleMenuClose();
+    }
+    function handleSortByLike(){
+        store.sortListByLikes();
+        handleMenuClose();
+    }
+    function handleSortByDislike(){
+        store.sortListByDislikes();
+        handleMenuClose();
+    }
+    const menuId = 'sort-list-menu';
+    const sortListMenu = 
+        <Menu
+            anchorEl={anchorE1}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
+            <MenuItem onClick={handleSortByDate}>Publish Date (Newest)</MenuItem>
+            <MenuItem onClick={handleSortByListen}>Listens (High-Low)</MenuItem>
+            <MenuItem onClick={handleSortByLike}>Likes (High-Low)</MenuItem>
+            <MenuItem onClick={handleSortByDislike}>Dislikes (High-Low)</MenuItem>
+        </Menu>
+    
 
     function handleHome() {
         handlePublic();
@@ -30,8 +83,6 @@ function MainToolbar() {
         if(!store.viewPrivate){
             store.toggleViewPrivate();
         }
-    }
-    function handleSort() {
     }
 
     if(!auth.loggedIn){
@@ -51,9 +102,10 @@ function MainToolbar() {
             </IconButton></Box>
             <TextField id="search-field" label="Search" variant = "filled" sx={{ position: "absolute", left:"24%", width:"35%"}}/>
             <Typography sx= {{position: "absolute", top:"5px",right:"4%", fontSize:"24px", fontWeight:"bold", color:"gray"}}> Sort By </Typography>
-            <Box sx={{ position: "absolute", right:"1%" }}><IconButton onClick={handleSort} aria-label='sort'>
+            <Box sx={{ position: "absolute", right:"1%" }}><IconButton onClick={handleSortMenuOpen} aria-label='sort'>
                 <SortIcon style={{fontSize:'24pt'}} />
             </IconButton></Box>
+            {sortListMenu}
         </Box>
     )
 }
