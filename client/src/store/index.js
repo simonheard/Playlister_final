@@ -628,7 +628,7 @@ function GlobalStoreContextProvider(props) {
     store.listen = function(listId, list) {
         list.listens++;
         async function asyncListen() {
-            const response = await api.updatePlaylistByIdNotOwner(listId, list);
+            const response = await api.updatePlaylistByIdNotOwner(store.currentList._id, store.currentList);
             if (response.data.success) {
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST,
@@ -652,7 +652,7 @@ function GlobalStoreContextProvider(props) {
     store.downvote = function(){
         if(store.currentList){
             let list = store.currentList;
-            list.downvotes= list.downvotes+1;
+            list.downvotes.push(auth.user.email);
             console.log(list.downvotes);
             store.updateCurrentListNotOwner();
         }
@@ -660,7 +660,7 @@ function GlobalStoreContextProvider(props) {
     store.upvote = function(){
         if(store.currentList){
             let list = store.currentList;
-            list.upvotes= list.upvotes+1;
+            list.upvotes.push(auth.user.email);
             console.log(list.upvotes);
             store.updateCurrentListNotOwner();
         }

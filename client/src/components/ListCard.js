@@ -27,8 +27,8 @@ function ListCard(props) {
     const [expanded, setExpanded] = useState(false);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
-    const [upvotes, setUpvotes] = useState(playlist.upvotes);
-    const [downvotes, setDownvotes] = useState(playlist.downvotes);
+    const [upvotes, setUpvotes] = useState(playlist.upvotes.length);
+    const [downvotes, setDownvotes] = useState(playlist.downvotes.length);
     const [listens, setListens] = useState(playlist.listens);
     const [published, setPublished] = useState(playlist.published);
     //const { idNamePair } = props;
@@ -139,18 +139,18 @@ function ListCard(props) {
         setPublished(true);
     }
 
-    let editAndDelete = 
-        <Box sx={{display: "flex", flexDirection: "row"}}>
-            <Box sx={{ p: 1 }}><IconButton onClick={handleToggleEdit} aria-label='edit'>
-                <EditIcon style={{fontSize:'24pt'}} />
-            </IconButton></Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, playlist._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'24pt'}} />
-                </IconButton>
-            </Box>
+
+    let editButton =
+        <Box sx={{ p: 1 }}><IconButton onClick={handleToggleEdit} aria-label='edit'>
+            <EditIcon style={{fontSize:'24pt'}} />
+        </IconButton></Box>
+    let deleteButton = 
+        <Box sx={{ p: 1 }}>
+            <IconButton onClick={(event) => {
+                    handleDeleteList(event, playlist._id)
+                }} aria-label='delete'>
+                <DeleteIcon style={{fontSize:'24pt'}} />
+            </IconButton>
         </Box>
     let songToolbar = <SongToolbar/>
     let publish = <Button variant="contained" onClick={handlePublish} sx={{margin:"auto"}}>Publish</Button>
@@ -163,9 +163,14 @@ function ListCard(props) {
     if(published){
         publish = null;
         bgcolor = "lightyellow";
-        editAndDelete = null;
+        editButton = null;
         songToolbar = null;
     }
+    let editAndDelete = 
+    <Box sx={{display: "flex", flexDirection: "row"}}>
+        {editButton}
+        {deleteButton}
+    </Box>
     if (auth.user.email!==playlist.ownerEmail){
         editAndDelete = null;
         songToolbar = null;
@@ -175,7 +180,6 @@ function ListCard(props) {
     if(auth.user.email==="guest"){
         duplicate = null;
     }
-    console.log(store.searchResult);
 
 
     let cardElement = 

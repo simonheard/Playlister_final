@@ -12,8 +12,8 @@ const playlistSchema = new Schema(
         ownerEmail: { type: String, required: true },
         ownerName: { type: String, requrired: true},
         published: {type: Boolean, default: false},
-        upvotes: { type: Number, default: 0},
-        downvotes: {type: Number, default: 0},
+        upvotes: { type: [String]},
+        downvotes: {type: [String]},
         listens: {type: Number, default: 0},
         publishedDate: {type: Date, required: false},
         songs: { type: [{
