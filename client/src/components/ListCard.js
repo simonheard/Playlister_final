@@ -30,6 +30,7 @@ function ListCard(props) {
     const [upvotes, setUpvotes] = useState(playlist.upvotes);
     const [downvotes, setDownvotes] = useState(playlist.downvotes);
     const [listens, setListens] = useState(playlist.listens);
+    const [published, setPublished] = useState(playlist.published);
     //const { idNamePair } = props;
     function handleToggleEdit(event) {
         event.stopPropagation();
@@ -55,8 +56,10 @@ function ListCard(props) {
         toggleShrink();
     }
     function toggleShrink(){
+        if(published){
         store.listen(playlist._id, playlist);
         setListens(listens+1);
+        }
         store.closeCurrentList();
         setExpanded(false);
     }
@@ -113,6 +116,7 @@ function ListCard(props) {
 
     let owner = playlist.ownerName;
     let time = playlist.createdAt.slice(0,10);
+    if(playlist.publishedDate){ time = playlist.publishedDate.slice(0,10);}
     //let listens = playlist.listens;
     // let upvotes = playlist.upvotes;
     // let downvotes = playlist.downvotes;
@@ -130,6 +134,10 @@ function ListCard(props) {
     function handleDuplicate(){
         store.duplicate(playlist);
     }
+    function handlePublish(){
+        store.publish();
+        setPublished(true);
+    }
 
     let editAndDelete = 
         <Box sx={{display: "flex", flexDirection: "row"}}>
@@ -145,20 +153,35 @@ function ListCard(props) {
             </Box>
         </Box>
     let songToolbar = <SongToolbar/>
-    if (auth.user.email!==playlist.ownerEmail){
+    let publish = <Button variant="contained" onClick={handlePublish} sx={{margin:"auto"}}>Publish</Button>
+    let duplicate = <Button variant="contained" onClick={handleDuplicate} sx={{margin:"auto"}}>Duplicate</Button>
+    let bgcolor = "lightpink";
+    let publishedText = "Published Date: "+time+ " Listens: "+ listens;
+    if(!published){
+        publishedText = null;
+    }
+    if(published){
+        publish = null;
+        bgcolor = "lightyellow";
         editAndDelete = null;
         songToolbar = null;
     }
-    let duplicate = <Button variant="contained" onClick={handleDuplicate} sx={{margin:"auto"}}>Duplicate</Button>
+    if (auth.user.email!==playlist.ownerEmail){
+        editAndDelete = null;
+        songToolbar = null;
+        publish = null;
+        bgcolor = "lightblue"
+    }
     if(auth.user.email==="guest"){
         duplicate = null;
     }
+
 
     let cardElement = 
         <ListItem
             id={playlist._id}
             key={playlist._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#8000F00F', marginTop: '15px', display: 'flex'}}
+            sx={{borderRadius:"25px", p: "10px", bgcolor: bgcolor, marginTop: '15px', display: 'flex'}}
             style={{transform:"translate(1%,0%)", width: '98%', fontSize: '24pt' }}
         >
             <Box sx={{display: "flex", flexDirection: "column"}}>
@@ -187,7 +210,7 @@ function ListCard(props) {
                     <span style={{fontSize:'12pt'}}> By: {owner} </span>
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
-                    <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
+                    <span style={{fontSize:'12pt'}}>{publishedText}</span>
                 </Box>
             </Box>
         </ListItem>
@@ -197,7 +220,7 @@ function ListCard(props) {
         <ListItem
             id={playlist._id}
             key={playlist._id}
-            sx={{borderRadius:"25px", p: "10px", bgcolor: '#F8F0FE', marginTop: '15px', display: 'flex'}}
+            sx={{borderRadius:"25px", p: "10px", bgcolor: bgcolor, marginTop: '15px', display: 'flex'}}
             style={{transform:"translate(1%,0%)", width: '98%', fontSize: '24pt' }}
         >
             <Box sx={{display: "flex", flexDirection: "column", height: '100%', width: '100%'}}>
@@ -248,9 +271,10 @@ function ListCard(props) {
                 <Box sx={{display: "flex", flexDirection: "row"}}>
                     {songToolbar}
                     {duplicate}
+                    {publish}
                 </Box>
                 <Box sx={{display: "flex", flexDirection: "row"}}>
-                    <span style={{fontSize:'12pt'}}>Published: {time}   Listens: {listens}</span>
+                    <span style={{fontSize:'12pt'}}>{publishedText}</span>
                 </Box>
             </Box>
             {modalJSX}
@@ -258,6 +282,9 @@ function ListCard(props) {
     }
     }
     if(store.viewPrivate && auth.user.email!==playlist.ownerEmail){
+        cardElement = null;
+    }
+    if(!playlist.published && auth.user.email!==playlist.ownerEmail){
         cardElement = null;
     }
     return (

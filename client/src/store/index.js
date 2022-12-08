@@ -296,7 +296,7 @@ function GlobalStoreContextProvider(props) {
     }
     store.sortListByDate = function(){
         let playlists = store.playlists;
-        playlists.sort( (a,b)=> (a.createdAt>b.createdAt) ? -1 : ((b.createdAt>a.createdAt) ? 1 : 0));
+        playlists.sort( (a,b)=> (a.publishedDate>b.publishedDate) ? -1 : ((b.publishedDate>a.publishedDate) ? 1 : 0));
         storeReducer({
             type: GlobalStoreActionType.LOAD_PLAYLISTS,
             payload: playlists
@@ -428,6 +428,12 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncDuplicate(list);
+    }
+    store.publish = function() {
+        store.currentList.published = true;
+        const date = new Date();
+        store.currentList.publishedDate = date;
+        store.updateCurrentList()
     }
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS

@@ -24,8 +24,16 @@ function Statusbar() {
                 onClick={handleCreateNewList}>
                 <AddIcon />
             </Fab>
-
+    if(auth.user){
+        if(auth.user.email==="guest"){
+            button = null;
+        }
+    }
     let text ="";
+    let whoslist = "Your Lists";
+    if(!store.viewPrivate){
+        whoslist = "Community Lists";
+    }
     if (auth.loggedIn){
         if(store.currentList){
             text = store.currentList.name;
@@ -38,7 +46,7 @@ function Statusbar() {
         return(
             <div id="playlister-statusbar">
                 {button}
-                Your lists
+                {whoslist}
             </div>
         );
     }

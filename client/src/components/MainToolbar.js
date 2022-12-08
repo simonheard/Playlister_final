@@ -63,7 +63,7 @@ function MainToolbar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleSortByName}>Name (A-Z)</MenuItem>
+            <MenuItem onClick={handleSortByName}>Name (A-Z a-z)</MenuItem>
             <MenuItem onClick={handleSortByDate}>Publish Date (Newest)</MenuItem>
             <MenuItem onClick={handleSortByListen}>Listens (High-Low)</MenuItem>
             <MenuItem onClick={handleSortByLike}>Likes (High-Low)</MenuItem>
