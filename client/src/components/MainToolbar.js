@@ -18,6 +18,7 @@ function MainToolbar() {
     const { store } = useContext(GlobalStoreContext);
     const {auth} = useContext(AuthContext);
     const [anchorE1, setAnchorEl] = useState(null);
+    const [text, setText]=useState("");
     const isMenuOpen = Boolean(anchorE1);
     
     const handleSortMenuOpen = (event) => {
@@ -84,6 +85,15 @@ function MainToolbar() {
             store.toggleViewPrivate();
         }
     }
+    function handleChange(event){
+        setText(event.target.value);
+    }
+    function handleSearch(event){
+        if(event.code === "Enter"){
+            //store.loadPlaylists();
+            store.searchListOrUser(text);
+        }
+    }
 
     if(!auth.loggedIn){
         return (null);
@@ -100,7 +110,7 @@ function MainToolbar() {
             <Box sx={{  }}><IconButton onClick={handlePrivate} aria-label='private'>
                 <PersonIcon style={{fontSize:'24pt'}} />
             </IconButton></Box>
-            <TextField id="search-field" label="Search" variant = "filled" sx={{ position: "absolute", left:"24%", width:"35%"}}/>
+            <TextField id="search-field" label="Search" variant = "filled" sx={{ position: "absolute", left:"24%", width:"35%"}} onChange={handleChange} onKeyPress={handleSearch}/>
             <Typography sx= {{position: "absolute", top:"5px",right:"4%", fontSize:"24px", fontWeight:"bold", color:"gray"}}> Sort By </Typography>
             <Box sx={{ position: "absolute", right:"1%" }}><IconButton onClick={handleSortMenuOpen} aria-label='sort'>
                 <SortIcon style={{fontSize:'24pt'}} />

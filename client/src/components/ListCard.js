@@ -175,6 +175,7 @@ function ListCard(props) {
     if(auth.user.email==="guest"){
         duplicate = null;
     }
+    console.log(store.searchResult);
 
 
     let cardElement = 
@@ -286,6 +287,15 @@ function ListCard(props) {
     }
     if(!playlist.published && auth.user.email!==playlist.ownerEmail){
         cardElement = null;
+    }
+    if(store.searchResult.length>0){
+        const inResult = store.searchResult.find(e => {
+            if (e===playlist._id) {return true;}
+            return false;
+        });
+        if (inResult === undefined) {
+            cardElement=null;
+          }
     }
     return (
         cardElement
